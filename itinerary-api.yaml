@@ -1,0 +1,65 @@
+openapi: 3.0.1
+info:
+  title: KLM Itinerary API
+  description: Calculate total fare based on the provided itinerary airports
+  version: 1.0.0
+  contact:
+    name: KLM
+    url: https://www.klm.com
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: itinerary-api
+    description: Itinerary API
+paths:
+  /itinerary:
+    get:
+      tags:
+        - itinerary-api
+      operationId: getByItinerary
+      parameters:
+        - name: airport
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Itinerary'
+        '400':
+          description: BadRequest, returned when invalid or not allowed airports are provided
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: NotFound
+components:
+  schemas:
+    Itinerary:
+      type: object
+      properties:
+        airports:
+          type: array
+          items:
+            type: string
+        fare:
+          type: number
+          format: double
+        tax:
+          type: number
+          format: double
+        distance:
+          description: The distance in kilometers
+          type: integer
+    Error:
+      type: object
+      properties:
+        message:
+          type: string

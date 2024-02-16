@@ -1,0 +1,140 @@
+openapi: 3.0.1
+info:
+  title: KLM Airports API
+  description: Search airports by code or by name
+  version: 1.0.0
+  contact:
+    name: KLM
+    url: https://www.klm.com
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: airports-api
+    description: Airports API
+paths:
+  /airports/{code}:
+    get:
+      tags:
+        - airport-api
+      operationId: getById
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Airport'
+        '404':
+          description: NotFound
+  /airports:
+    get:
+      tags:
+        - airport-api
+      operationId: search
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Airports with comply with search string
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Airport'
+components:
+  schemas:
+    Airport:
+      required:
+        - icao
+        - name
+      type: object
+      properties:
+        icao:
+          type: string
+        iata:
+          type: string
+        name:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+    Coordinates:
+      required:
+        - latitude
+        - longitude
+      type: object
+      properties:
+        latitude:
+          $ref: '#/components/schemas/Latitude'
+        longitude:
+          $ref: '#/components/schemas/Longitude'
+    Latitude:
+      required:
+        - degrees
+        - direction
+        - minutes
+        - seconds
+      type: object
+      properties:
+        degrees:
+          type: integer
+          format: int32
+        minutes:
+          type: integer
+          format: int32
+        seconds:
+          type: integer
+          format: int32
+        direction:
+          type: string
+          enum:
+            - 'N'
+            - S
+    Location:
+      required:
+        - city
+        - coordinates
+        - country
+      type: object
+      properties:
+        city:
+          type: string
+        country:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        altitude:
+          type: integer
+          format: int32
+    Longitude:
+      required:
+        - degrees
+        - direction
+        - minutes
+        - seconds
+      type: object
+      properties:
+        degrees:
+          type: integer
+          format: int32
+        minutes:
+          type: integer
+          format: int32
+        seconds:
+          type: integer
+          format: int32
+        direction:
+          type: string
+          enum:
+            - E
+            - W
