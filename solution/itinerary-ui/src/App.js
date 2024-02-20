@@ -1,9 +1,13 @@
-import Layout from './components/Layout'
+import { RecoilRoot} from 'recoil';
+
+import { Layout } from './components/Layout'
 import './App.css';
 
 function App() {
   return (
-    <Layout />
+    <RecoilRoot>
+      <Layout/>
+    </RecoilRoot>
   );
 }
 
