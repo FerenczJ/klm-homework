@@ -13,13 +13,13 @@ export function AirportAutocomplete() {
     getOptionLabel: (option) => option.name,
   };
 
+  const addAirportToSelected = (event, airport) => setSelectedAirports((selectedAirports).concat(airport));
+
   return (
     <Autocomplete
     {...defaultProps}
     blurOnSelect
-    onChange={(event, newValue) => {
-      setSelectedAirports((selectedAirports).concat(newValue));
-    }}
+    onChange={addAirportToSelected}
     value={value}
     renderInput={(params) => (
       <TextField {...params} label="Select an Airport" variant="standard" />
