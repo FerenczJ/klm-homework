@@ -1,12 +1,31 @@
-import { RecoilRoot} from 'recoil';
+import { RecoilRoot } from 'recoil';
 
 import { Layout } from './components/Layout'
 import './App.css';
+import { ThemeProvider, createTheme } from '@mui/material';
+
+const klmTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#072b45",
+      light: "#00a1de",
+      dark: "#0077cd",
+      contrastText: "#FFFFFF"
+    }
+
+  },
+  typography: {
+    fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif`,
+    color: "rgba(0, 0, 0, 8.0)"
+  }
+});
 
 function App() {
   return (
     <RecoilRoot>
-      <Layout/>
+      <ThemeProvider theme={klmTheme}>
+        <Layout />
+      </ThemeProvider>
     </RecoilRoot>
   );
 }
