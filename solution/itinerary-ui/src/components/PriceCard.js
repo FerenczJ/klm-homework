@@ -1,4 +1,5 @@
 import { Card, CardContent, Table, TableBody, TableCell, TableContainer, TableRow, Typography, tableCellClasses } from '@mui/material';
+import React from 'react';
 import { useRecoilValue } from "recoil";
 import { calculationState } from '../state/calculationState';
 

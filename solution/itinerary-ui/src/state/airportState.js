@@ -2,7 +2,7 @@ import { atom, selector } from 'recoil';
 
 export const airportsState = atom({
     key: 'airportsState',
-    default: [{ name: "BUD", iata: "BUD" }, { name: "LAX", iata: "LAX" }, { name: "GOT", iata: "GOT" }, { name: "BCN", iata: "BCN" }],
+    default: [],
 });
 
 export const selectedAirportsState = atom({
