@@ -16,7 +16,6 @@ const klmTheme = createTheme({
   },
   typography: {
     fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif`,
-    color: "rgba(0, 0, 0, 8.0)"
   }
 });
 

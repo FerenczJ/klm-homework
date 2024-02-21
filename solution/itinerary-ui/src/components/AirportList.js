@@ -1,18 +1,25 @@
 
-import { List, ListItem, ListItemText, IconButton, ListItemAvatar, Avatar, ListItemIcon, ListSubheader, Box } from '@mui/material';
+import { List, ListItem, ListItemText, IconButton, ListItemIcon, Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
 import CircleIcon from '@mui/icons-material/Circle';
 import { selectedAirportsState } from '../state/airportState';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { titleCase } from '../util/ItineraryUtil';
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { calculationState } from '../state/calculationState';
 
 export function AirportList(props) {
 
     const [selectedAirports, setSelectedAirports] = useRecoilState(selectedAirportsState);
-    const removeAirportFromSelected = (airport) => setSelectedAirports(selectedAirports.filter(x => x.iata !== airport.iata));
+    const resetCalculation = useResetRecoilState(calculationState);
+
+    const onRemoveAirport = (airport) => {
+        setSelectedAirports(selectedAirports.filter(x => x.iata !== airport.iata));
+        resetCalculation();
+    }
 
     const reorder = (list, startIndex, endIndex) => {
         const result = Array.from(list);
@@ -23,8 +30,7 @@ export function AirportList(props) {
     };
 
     const getItemStyle = (isDragging, draggableStyle) => ({
-        background: isDragging ? "lightGray" : "none",
-        color: isDragging ? "white" : "black",
+        background: isDragging ? "white" : "none",
         ...draggableStyle
     });
 
@@ -41,10 +47,14 @@ export function AirportList(props) {
         );
 
         setSelectedAirports(reorderedAirports);
+        resetCalculation();
     }
 
     const getListStyle = isDraggingOver => ({
-        background: isDraggingOver ? "lightblue" : "none",
+        background: isDraggingOver ? "lightGray" : "none",
+        maxHeight: 290,
+        overflow: "auto",
+        padding: 0
     });
 
 
@@ -71,7 +81,7 @@ export function AirportList(props) {
                                                 provided.draggableProps.style
                                             )}
                                             secondaryAction={
-                                                <IconButton edge="end" aria-label="delete" onClick={() => removeAirportFromSelected(airport)}>
+                                                <IconButton edge="end" aria-label="delete" onClick={() => onRemoveAirport(airport)}>
                                                     <DeleteIcon color="primary" />
                                                 </IconButton>
                                             }>
@@ -82,7 +92,7 @@ export function AirportList(props) {
                                                 )}
                                                 {index != 0 && index != selectedAirports.length - 1 && (<CircleIcon sx={{ marginLeft: "3px" }} fontSize="2" color="primary" />)}
                                             </ListItemIcon>
-                                            <ListItemText primary={airport.name} />
+                                            <ListItemText primary={titleCase(airport.location.city + ", " + airport.name)} secondary={airport.iata + " - " + titleCase(airport.location.country)} />
 
                                         </ListItem>
                                     )}

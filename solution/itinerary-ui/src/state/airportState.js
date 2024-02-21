@@ -7,7 +7,7 @@ export const airportsState = atom({
 
 export const selectedAirportsState = atom({
     key: 'selectedAirportsState',
-    default: [],
+    default: []
 });
 
 export const airportsSelector = selector({
