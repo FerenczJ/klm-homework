@@ -1,10 +1,6 @@
 import { Box, Card, CardContent, Typography } from '@mui/material';
 export default function GreetingCard() {
     const greetingCardStyle = {
-        position: "absolute",
-        top: "250px",
-        right: "17%",
-        display: "block",
         minWidth: "600px",
         maxWidth: "600px",
         backgroundColor: "primary.main",

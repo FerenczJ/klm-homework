@@ -14,10 +14,7 @@ export default function FlightPlanCard() {
     const [open, setOpen] = useState(false);
 
     const airportsSelectorCardStyle = {
-        position: "absolute",
-        top: "460px",
-        left: "17%",
-        display: "block",
+        mt: 32,
         minWidth: "600px",
         minHeight: 260,
     }
@@ -31,7 +28,7 @@ export default function FlightPlanCard() {
     return (
         <>
             <Card sx={airportsSelectorCardStyle} >
-                <CardContent >
+                <CardContent>
                     <Box display="flex" flexDirection="row">
                         <Box flexGrow="1" >
                             <Typography variant="h6" color="primary">Plan your flight</Typography>

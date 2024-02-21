@@ -10,10 +10,6 @@ export default function PriceCard() {
     const calculation = useRecoilValue(calculationState);
 
     const priceCardStyle = {
-        position: "absolute",
-        top: "460px",
-        right: "17%",
-        display: "block",
         minWidth: "600px",
         maxWidth: "600px",
     }
