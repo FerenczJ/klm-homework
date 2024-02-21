@@ -1,4 +1,3 @@
-
 import { List, ListItem, ListItemText, IconButton, ListItemIcon, Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
@@ -57,7 +56,6 @@ export function AirportList(props) {
         padding: 0
     });
 
-
     return (
         <Box {...props}>
             <DragDropContext onDragEnd={onDragEnd}>
@@ -71,7 +69,6 @@ export function AirportList(props) {
                             {selectedAirports.map((airport, index) => (
                                 <Draggable key={airport.iata} draggableId={airport.iata} index={index}>
                                     {(provided, snapshot) => (
-
                                         <ListItem
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
@@ -86,21 +83,19 @@ export function AirportList(props) {
                                                 </IconButton>
                                             }>
                                             <ListItemIcon >
-                                                {index == 0 && (<FlightTakeoffIcon color="primary" />)}
-                                                {index == selectedAirports.length - 1 && selectedAirports.length !== 1 && (
+                                                {index === 0 && (<FlightTakeoffIcon color="primary" />)}
+                                                {index === selectedAirports.length - 1 && selectedAirports.length !== 1 && (
                                                     <FlightLandIcon color="primary" />
                                                 )}
-                                                {index != 0 && index != selectedAirports.length - 1 && (<CircleIcon sx={{ marginLeft: "3px" }} fontSize="2" color="primary" />)}
+                                                {index !== 0 && index !== selectedAirports.length - 1 && (<CircleIcon sx={{ marginLeft: "3px" }} fontSize="2" color="primary" />)}
                                             </ListItemIcon>
                                             <ListItemText primary={titleCase(airport.location.city + ", " + airport.name)} secondary={airport.iata + " - " + titleCase(airport.location.country)} />
-
                                         </ListItem>
                                     )}
                                 </Draggable>
                             ))}
                             {provided.placeholder}
                         </List>
-
                     )}
                 </Droppable>
             </DragDropContext>

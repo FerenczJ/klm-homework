@@ -1,46 +1,35 @@
-import * as React from 'react';
-import { Autocomplete, Box, ListItem, ListItemText, TextField } from '@mui/material';
-import { airportsSelector, airportsState, selectedAirportsState } from '../state/airportState';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import { titleCase } from '../util/ItineraryUtil';
-import { calculationState } from '../state/calculationState';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
+import { Autocomplete, Box, ListItem, ListItemText, TextField } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { itineraryService } from '../service/itineraryService';
+import { airportsSelector, airportsState, selectedAirportsState } from '../state/airportState';
+import { calculationState } from '../state/calculationState';
+import { titleCase } from '../util/ItineraryUtil';
 
 export function AirportAutocomplete(props) {
   const [selectedAirports, setSelectedAirports] = useRecoilState(selectedAirportsState);
-  const [airportOptions, setAirportOptions] = useRecoilState(airportsSelector);
-  const [airports, setAirports] = useRecoilState(airportsState);
+  const airportOptions = useRecoilValue(airportsSelector);
+  const setAirports = useSetRecoilState(airportsState);
   const resetCalculation = useResetRecoilState(calculationState);
-  const [value, setValue] = React.useState(null);
-
-  const defaultProps = {
-    options: airportOptions,
-    getOptionLabel: (airport) =>
-      "(" + airport.iata + ") " + titleCase(airport.location.country + ", " + airport.location.city + " - " + airport.name),
-  };
+  let value = null;
 
   const addAirportToSelected = (event, airport) => {
     setSelectedAirports((selectedAirports).concat(airport));
     resetCalculation();
   }
 
-  const customScollbarStyle = {
-    scrollbarColor: "#072b45 #f1f1f1",
-    scrollbarWidth: "thin"
-  }
-
-
-  React.useEffect(() => {
-    fetch("http://localhost:8080/airports")
-      .then(response => response.json())
+  useEffect(() => {
+    itineraryService.getAirports()
       .then(setAirports)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Box {...props}>
       <Autocomplete
-        {...defaultProps}
         blurOnSelect
+        options={airportOptions}
         sx={{ color: "primary.dark" }}
         onChange={addAirportToSelected}
         value={value}
