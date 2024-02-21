@@ -28,8 +28,8 @@ export default function PriceCard() {
     return (
         <Card sx={priceCardStyle}>
             <CardContent >
-                <Typography variant="h6" color="primary" marginBottom="15px">Your price</Typography>
-                <TableContainer sx={{ marginBottom: "12px" }}>
+                <Typography variant="h6" color="primary" marginBottom="20px">Your price</Typography>
+                <TableContainer>
                     <Table sx={tableStyle}>
                         <TableBody>
                             <TableRow>
