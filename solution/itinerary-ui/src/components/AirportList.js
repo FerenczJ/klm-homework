@@ -99,7 +99,7 @@ export function AirportList(props) {
                     )}
                 </Droppable>
             </DragDropContext>
-            {selectedAirports.length < 1 && (<ListItem><ListItemText primary="No filghts seleced." /></ListItem>)}
+            {selectedAirports.length < 1 && (<ListItem disabled><ListItemText primary="No filghts selected." /></ListItem>)}
         </Box>
     )
 }
